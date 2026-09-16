@@ -1,16 +1,61 @@
-## Hi there 👋
+Merhaba, Ben [İlyas Kurt] 👋
 
-<!--
-**Lyas7/Lyas7** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+🚀 Hakkımda
 
-Here are some ideas to get you started:
+Yazılım geliştirme tutkusu olan, ölçeklenebilir ve kullanıcı odaklı çözümler üretmeye odaklanan bir [Ai Developerım]'yim.
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+🔭 Şu anda [Üzerinde çalıştığınız proje veya teknoloji] üzerinde çalışıyorum.
+
+🌱 Aktif olarak [Ai Developer] üzerine kendimi geliştiriyorum.
+
+💬 [Uzmanlık alanlarım: React, Node.js, Python, Mimari Tasarımlar] hakkında soru sorabilir veya fikir alışverişi yapabilirsiniz.
+
+⚡ Hobiler: [Yazılım dışı ilgi alanlarınız / Eğlenceli bir bilgi]
+
+🛠️ Yetenekler & Teknolojiler
+
+Programlama Dilleri
+
+Frontend Geliştirme
+
+Backend & Veritabanı
+
+Araçlar & DevOps
+
+📊 GitHub İstatistikleri
+
+📌 Öne Çıkan Projeler
+
+Proje Adı
+
+Açıklama
+
+Teknolojiler
+
+Bağlantı
+
+[Proje 1]
+
+[Ai Portolio Odası]
+
+React, Node.js, PostgreSQL
+
+Canlı Demo / Kod
+
+[Proje 2]
+
+[Artificial İntelligence Project]
+
+Python, FastAPI, Docker
+
+Canlı Demo / Kod
+
+[Proje 3]
+
+[Ai ajanlarının konuştuğu bir pixel art oyun odası]
+
+TypeScript, Next.js, Tailwind
+
+Canlı Demo / Kod
+
+📫 İletişim ilyas.kurt.777@gmail.com / 5352777057
