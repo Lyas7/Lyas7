@@ -41,8 +41,6 @@
   C#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://progress-bar.dev/50/?scale=100&title=&width=200&color=9B4F96" />
 </p>
 
-> Yüzdeleri kendi seviyene göre `progress-bar.dev/SAYI` kısmındaki sayıyı değiştirerek güncelleyebilirsin.
-
 ---
 
 ### 📌 Öne Çıkan Projeler
@@ -52,17 +50,17 @@
     <td width="33%" align="center">
       <h3>🎨 AI Portfolio Odası</h3>
       <p><i>React, Node.js, PostgreSQL</i></p>
-      <a href="#">🔗 Canlı Demo</a> · <a href="#">💻 Kod</a>
+      <a href="https://github.com/lyas7/ai-portfolio-odasi">🔗 Canlı Demo</a> · <a href="https://github.com/lyas7/ai-portfolio-odasi">💻 Kod</a>
     </td>
     <td width="33%" align="center">
       <h3>🧠 Artificial Intelligence Project</h3>
       <p><i>Python, FastAPI, Docker</i></p>
-      <a href="#">🔗 Canlı Demo</a> · <a href="#">💻 Kod</a>
+      <a href="https://github.com/lyas7/artificial-intelligence-project">🔗 Canlı Demo</a> · <a href="https://github.com/lyas7/artificial-intelligence-project">💻 Kod</a>
     </td>
     <td width="33%" align="center">
       <h3>👾 AI Ajanlı Pixel Art Oyun Odası</h3>
       <p><i>TypeScript, Next.js, Tailwind</i></p>
-      <a href="#">🔗 Canlı Demo</a> · <a href="#">💻 Kod</a>
+      <a href="https://github.com/lyas7/ai-pixel-art-oyun-odasi">🔗 Canlı Demo</a> · <a href="https://github.com/lyas7/ai-pixel-art-oyun-odasi">💻 Kod</a>
     </td>
   </tr>
 </table>
