@@ -29,20 +29,19 @@
 
 ---
 
-### 📊 GitHub İstatistikleri
+### 🧠 Yetkinlik Seviyelerim
 
 <p align="center">
-  <img height="165" src="https://github-readme-stats.vercel.app/api?username=lyas7&show_icons=true&theme=tokyonight&hide_border=true" />
-  <img height="165" src="https://github-readme-stats.vercel.app/api/top-langs/?username=lyas7&layout=compact&theme=tokyonight&hide_border=true" />
+  Python&nbsp;&nbsp;<img src="https://progress-bar.dev/100/?scale=100&title=&width=200&color=3776AB" /><br>
+  React&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://progress-bar.dev/80/?scale=100&title=&width=200&color=61DAFB" /><br>
+  HTML&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://progress-bar.dev/100/?scale=100&title=&width=200&color=E34F26" /><br>
+  DevOps&nbsp;&nbsp;<img src="https://progress-bar.dev/100/?scale=100&title=&width=200&color=2496ED" /><br>
+  C&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://progress-bar.dev/100/?scale=100&title=&width=200&color=A8B9CC" /><br>
+  Java&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://progress-bar.dev/40/?scale=100&title=&width=200&color=ED8B00" /><br>
+  C#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://progress-bar.dev/50/?scale=100&title=&width=200&color=9B4F96" />
 </p>
 
-<p align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=lyas7&theme=tokyonight&hide_border=true" />
-</p>
-
-<p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=lyas7&theme=tokyo-night&hide_border=true" />
-</p>
+> Yüzdeleri kendi seviyene göre `progress-bar.dev/SAYI` kısmındaki sayıyı değiştirerek güncelleyebilirsin.
 
 ---
 
