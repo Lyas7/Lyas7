@@ -32,13 +32,13 @@
 ### 🧠 Yetkinlik Seviyelerim
 
 <p align="center">
-  Python&nbsp;&nbsp;<img src="https://progress-bar.dev/100/?scale=100&title=&width=200&color=3776AB" /><br>
-  React&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://progress-bar.dev/80/?scale=100&title=&width=200&color=61DAFB" /><br>
-  HTML&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://progress-bar.dev/100/?scale=100&title=&width=200&color=E34F26" /><br>
-  DevOps&nbsp;&nbsp;<img src="https://progress-bar.dev/100/?scale=100&title=&width=200&color=2496ED" /><br>
-  C&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://progress-bar.dev/100/?scale=100&title=&width=200&color=A8B9CC" /><br>
-  Java&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://progress-bar.dev/40/?scale=100&title=&width=200&color=ED8B00" /><br>
-  C#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://progress-bar.dev/50/?scale=100&title=&width=200&color=9B4F96" />
+  Python &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ████████████████████ 100%<br>
+  React &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ████████████████░░░░ 80%<br>
+  HTML &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ████████████████████ 100%<br>
+  DevOps &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ████████████████████ 100%<br>
+  C &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ████████████████████ 100%<br>
+  Java &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ████████░░░░░░░░░░░░ 40%<br>
+  C# &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ██████████░░░░░░░░░░ 50%
 </p>
 
 ---
