@@ -4,17 +4,17 @@ Merhaba, Ben [İlyas Kurt] 👋
 
 Yazılım geliştirme tutkusu olan, ölçeklenebilir ve kullanıcı odaklı çözümler üretmeye odaklanan bir [Ai Developerım]'yim.
 
-🔭 Şu anda [Üzerinde çalıştığınız proje veya teknoloji] üzerinde çalışıyorum.
+🔭 Şu anda [LLM Modelleri] üzerinde çalışıyorum.
 
 🌱 Aktif olarak [Ai Developer] üzerine kendimi geliştiriyorum.
 
 💬 [Uzmanlık alanlarım: React, Node.js, Python, Mimari Tasarımlar] hakkında soru sorabilir veya fikir alışverişi yapabilirsiniz.
 
-⚡ Hobiler: [Yazılım dışı ilgi alanlarınız / Eğlenceli bir bilgi]
+⚡ Hobiler: [Oyun oynamak, Müzik dinlemek, yazılım ve teknoloji alanında bişeyler üretmek,film ve dizi izlemek.]
 
 🛠️ Yetenekler & Teknolojiler
 
-Programlama Dilleri
+Programlama Dilleri  React, Node.js, Python
 
 Frontend Geliştirme
 
@@ -25,14 +25,6 @@ Araçlar & DevOps
 📊 GitHub İstatistikleri
 
 📌 Öne Çıkan Projeler
-
-Proje Adı
-
-Açıklama
-
-Teknolojiler
-
-Bağlantı
 
 [Proje 1]
 
