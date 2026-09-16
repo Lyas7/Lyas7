@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Karen Babaoğlu - Pixel Card & Email Signature</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jacquard+12&family=VT323&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --orange: #f48f6e;
+      --white: #f4f5ef;
+      --blue-dark: #044da6;
+      --pink: #ee8198;
+      --bordergrey: #cccccc;
+      --lightgrey: #9e9e9e;
+      --grey: #404040;
+      --hair-dark: #2A1A14;
+      --hair-mid: #4A2E20;
+      --skin: #F3C5A5;
+      --dress: #1C1C1E;
+      --gold: #FFD700;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 40px 16px;
+      background: #e9e9e3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'VT323', monospace;
+    }
+
+    .ascii {
+      font-family: ui-monospace, 'Courier New', Courier, monospace;
+      white-space: pre;
+    }
+
+    /* CARD STRUCTURE */
+    .card {
+      width: 480px;
+      max-width: 100%;
+      background: var(--white);
+      border: 3px solid var(--grey);
+      border-radius: 12px;
+      position: relative;
+      box-shadow: 6px 6px 0 var(--orange), 0 20px 40px rgba(0,0,0,0.15);
+      overflow: hidden;
+    }
+
+    .corner {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border: 3px solid var(--blue-dark);
+      z-index: 20;
+    }
+    .corner.tl { top: -3px; left: -3px; border-right: none; border-bottom: none; }
+    .corner.tr { top: -3px; right: -3px; border-left: none; border-bottom: none; }
+    .corner.bl { bottom: -3px; left: -3px; border-right: none; border-top: none; }
+    .corner.br { bottom: -3px; right: -3px; border-left: none; border-top: none; }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 0 6px;
+      font-size: 14px;
+      letter-spacing: .22em;
+      color: var(--grey);
+      border-bottom: 1px solid var(--bordergrey);
+      text-transform: uppercase;
+    }
+    .eyebrow .diamond { color: var(--pink); }
+
+    .scene {
+      position: relative;
+      height: 240px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #2b2b36 0%, #044da6 60%, #3a3b4e 100%);
+    }
+
+    .scene::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 9;
+      pointer-events: none;
+      background: repeating-linear-gradient(to bottom, rgba(244,245,239,.04) 0px, rgba(244,245,239,.04) 1px, transparent 1px, transparent 3px);
+      mix-blend-mode: overlay;
+    }
+
+    .moon {
+      position: absolute;
+      top: 16px;
+      right: 45px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--white);
+      box-shadow: 0 0 22px 7px rgba(238,129,152,.55);
+      animation: moonpulse 4.5s ease-in-out infinite;
+      z-index: 1;
+    }
+    @keyframes moonpulse {
+      0%, 100% { box-shadow: 0 0 14px 4px rgba(238,129,152,.35); }
+      50% { box-shadow: 0 0 26px 9px rgba(238,129,152,.75); }
+    }
+
+    .stars span {
+      position: absolute;
+      color: var(--white);
+      font-size: 10px;
+      z-index: 1;
+      animation: twinkle 2.8s ease-in-out infinite;
+    }
+    @keyframes twinkle { 0%, 100% { opacity: .2; } 50% { opacity: .9; } }
+
+    /* Floating Pixels / Magic Sparkles */
+    .sparkle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: var(--pink);
+      z-index: 4;
+      animation: floatUp 4s linear infinite;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(200px) rotate(0deg); opacity: 0; }
+      20% { opacity: 0.8; }
+      80% { opacity: 0.8; }
+      100% { transform: translateY(-20px) rotate(180deg); opacity: 0; }
+    }
+
+    .portrait-wrap {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      margin-top: -85px;
+      z-index: 10;
+    }
+
+    .portrait {
+      width: 170px;
+      background: transparent;
+      padding: 0;
+      text-align: center;
+    }
+
+    .portrait svg {
+      width: 100%;
+      height: auto;
+      shape-rendering: crispEdges;
+      display: block;
+      filter: drop-shadow(0px 6px 0px rgba(4,77,166,0.5));
+    }
+
+    .plvl {
+      margin-top: 4px;
+      font-size: 13px;
+      letter-spacing: .12em;
+      color: var(--white);
+      background: var(--grey);
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 4px;
+      box-shadow: 2px 2px 0 var(--pink);
+    }
+
+    /* Avatar Animations */
+    .p-head {
+      transform-box: fill-box;
+      transform-origin: 50% 100%;
+      animation: headtilt 5s ease-in-out infinite;
+    }
+    @keyframes headtilt {
+      0%, 100% { transform: rotate(0deg) translateY(0); }
+      30% { transform: rotate(-2deg) translateY(-0.3px); }
+      65% { transform: rotate(2deg) translateY(0.2px); }
+    }
+
+    .p-hair-l {
+      transform-box: fill-box;
+      transform-origin: 100% 0%;
+      animation: swayL 3.5s ease-in-out infinite;
+    }
+    .p-hair-r {
+      transform-box: fill-box;
+      transform-origin: 0% 0%;
+      animation: swayR 3.8s ease-in-out infinite;
+      animation-delay: .3s;
+    }
+    @keyframes swayL { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-3deg); } }
+    @keyframes swayR { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(3deg); } }
+
+    .p-eye-open { animation: blinkOpen 5s infinite; }
+    .p-eye-closed { opacity: 0; animation: blinkClosed 5s infinite; }
+    @keyframes blinkOpen { 0%, 90%, 100% { opacity: 1; } 92%, 96% { opacity: 0; } }
+    @keyframes blinkClosed { 0%, 90%, 100% { opacity: 0; } 92%, 96% { opacity: 1; } }
+
+    .p-pendant {
+      animation: pendantGlow 2.5s ease-in-out infinite;
+    }
+    @keyframes pendantGlow { 0%, 100% { fill: #FFFFFF; } 50% { fill: #DCDCDC; } }
+
+    .title-block {
+      text-align: center;
+      padding: 8px 10px 4px;
+    }
+
+    .name {
+      font-family: 'Jacquard 12', 'VT323', monospace;
+      font-size: 42px;
+      line-height: 1;
+      letter-spacing: .04em;
+      color: var(--grey);
+      animation: signglow 3.4s ease-in-out infinite;
+    }
+    @keyframes signglow {
+      0%, 100% { text-shadow: 2px 2px 0 var(--orange); }
+      50% { text-shadow: 2px 2px 0 var(--pink); }
+    }
+
+    .class-line {
+      font-size: 16px;
+      letter-spacing: .06em;
+      color: var(--grey);
+      margin-top: -2px;
+    }
+    .class-line b {
+      color: var(--blue-dark);
+      font-weight: normal;
+      background: rgba(244,143,110,0.2);
+      padding: 0 6px;
+      border-radius: 3px;
+    }
+
+    .stats {
+      padding: 12px 24px 4px;
+    }
+
+    .stat-row {
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: var(--grey);
+      letter-spacing: .04em;
+      margin-bottom: 3px;
+    }
+
+    .bar {
+      height: 10px;
+      border: 1px solid var(--grey);
+      border-radius: 3px;
+      background: var(--bordergrey);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bar i {
+      display: block;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bar i::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.8), transparent);
+      width: 40%;
+      animation: shimmer 2.8s linear infinite;
+    }
+    @keyframes shimmer { 0% { transform: translateX(-120%); } 100% { transform: translateX(260%); } }
+
+    .bar.hp i { width: 100%; background: var(--orange); }
+    .bar.mp i { width: 92%; background: var(--pink); }
+
+    .flavor {
+      margin-top: 10px;
+      font-size: 14px;
+      line-height: 17px;
+      color: var(--grey);
+      text-align: center;
+      padding: 0 10px;
+    }
+    .flavor .tag { color: var(--pink); font-weight: bold; }
+
+    /* MENU LINKS */
+    .menu {
+      margin: 12px 24px 8px;
+      border-top: 1px dashed var(--bordergrey);
+      border-bottom: 1px dashed var(--bordergrey);
+      padding: 10px 0;
+    }
+
+    .menu .row {
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      padding: 4px 0;
+      color: var(--grey);
+    }
+
+    .menu .arrow {
+      width: 18px;
+      color: var(--blue-dark);
+      opacity: 0;
+      animation: selectcycle 4.5s steps(1) infinite;
+      font-weight: bold;
+    }
+
+    .menu .row:nth-child(1) .arrow { animation-delay: 0s; }
+    .menu .row:nth-child(2) .arrow { animation-delay: 1.5s; }
+    .menu .row:nth-child(3) .arrow { animation-delay: 3.0s; }
+
+    @keyframes selectcycle { 0%, 33% { opacity: 1; } 34%, 100% { opacity: 0; } }
+
+    .menu .k {
+      width: 90px;
+      color: var(--lightgrey);
+      letter-spacing: .04em;
+    }
+
+    .menu a {
+      color: var(--grey);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .menu a:hover {
+      color: var(--pink);
+      border-color: var(--pink);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 8px 0 16px;
+      font-size: 15px;
+      letter-spacing: .1em;
+      color: var(--pink);
+    }
+
+    .footer .blink {
+      animation: hardblink 1.1s steps(1) infinite;
+      color: var(--orange);
+    }
+    @keyframes hardblink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+      .p-eye-open { opacity: 1; }
+      .p-eye-closed { opacity: 0; }
+      .menu .row:nth-child(1) .arrow { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="corner tl"></div><div class="corner tr"></div>
+    <div class="corner bl"></div><div class="corner br"></div>
+    
+    <div class="eyebrow">
+      <span class="diamond">◆</span> Pixel Designer Portfolio <span class="diamond">◆</span>
+    </div>
+
+    <!-- Animated Night Scene -->
+    <div class="scene">
+      <div class="stars">
+        <span style="top:15px; left:10%;">✦</span>
+        <span style="top:35px; left:82%; animation-delay:.8s;">★</span>
+        <span style="top:10px; left:60%; animation-delay:1.6s;">✦</span>
+        <span style="top:55px; left:25%; animation-delay:2.2s;">★</span>
+        <span style="top:75px; left:75%; animation-delay:1.1s;">✦</span>
+      </div>
+      <div class="moon"></div>
+      
+      <!-- Floating Magic Pixels -->
+      <div class="sparkle" style="left: 15%; animation-delay: 0s;"></div>
+      <div class="sparkle" style="left: 45%; animation-delay: 1.2s;"></div>
+      <div class="sparkle" style="left: 75%; animation-delay: 2.5s;"></div>
+    </div>
+
+    <div class="portrait-wrap">
+      <div class="portrait">
+        <svg viewBox="0 0 24 28" xmlns="http://www.w3.org/2000/svg">
+          <g class="p-head">
+            
+            <!-- Long Wavy Hair Back Layer -->
+            <g class="p-hair-l" fill="var(--hair-dark)">
+              <rect x="3" y="8" width="4" height="12"/>
+              <rect x="2" y="11" width="3" height="8"/>
+              <rect x="1" y="14" width="2" height="5"/>
+            </g>
+            <g class="p-hair-r" fill="var(--hair-dark)">
+              <rect x="17" y="8" width="4" height="12"/>
+              <rect x="19" y="11" width="3" height="8"/>
+              <rect x="21" y="14" width="2" height="5"/>
+            </g>
+
+            <!-- Hair Highlights Back -->
+            <g fill="var(--hair-mid)">
+              <rect x="4" y="10" width="2" height="8"/>
+              <rect x="18" y="10" width="2" height="8"/>
+            </g>
+
+            <!-- Body & Black Halter Dress (From Photo) -->
+            <g fill="var(--dress)">
+              <!-- Neck Straps -->
+              <rect x="9" y="18" width="2" height="2"/>
+              <rect x="13" y="18" width="2" height="2"/>
+              <!-- Sleeveless Dress Top -->
+              <rect x="8" y="20" width="8" height="8"/>
+              <rect x="7" y="22" width="10" height="6"/>
+              <rect x="6" y="25" width="12" height="3"/>
+            </g>
+
+            <!-- Skin (Shoulders, Neck & Face) -->
+            <g fill="var(--skin)">
+              <!-- Shoulders -->
+              <rect x="5" y="21" width="3" height="3"/>
+              <rect x="16" y="21" width="3" height="3"/>
+              <!-- Neck -->
+              <rect x="10" y="17" width="4" height="4"/>
+              <!-- Face Base -->
+              <rect x="7" y="8" width="10" height="9"/>
+              <rect x="8" y="17" width="8" height="1"/>
+              <rect x="9" y="18" width="6" height="1"/>
+            </g>
+
+            <!-- Feather Necklace Pendant (Silver) -->
+            <g class="p-pendant">
+              <rect x="11" y="19" width="2" height="1" fill="#E0E0E0"/>
+              <rect x="11.5" y="20" width="1" height="2" fill="#FFFFFF"/>
+            </g>
+
+            <!-- Gold Hoop Earrings (From Photo) -->
+            <g fill="var(--gold)">
+              <rect x="6" y="13" width="1" height="2"/>
+              <rect x="17" y="13" width="1" height="2"/>
+            </g>
+
+            <!-- Front Hair & Wavy Bangs -->
+            <g fill="var(--hair-dark)">
+              <!-- Top head curve -->
+              <rect x="8" y="5" width="8" height="3"/>
+              <rect x="6" y="6" width="12" height="3"/>
+              <!-- Middle Part Hair Waves -->
+              <rect x="6" y="8" width="3" height="6"/>
+              <rect x="15" y="8" width="3" height="6"/>
+              <rect x="9" y="6" width="2" height="2"/>
+              <rect x="13" y="6" width="2" height="2"/>
+            </g>
+
+            <g fill="var(--hair-mid)">
+              <rect x="8" y="6" width="2" height="2"/>
+              <rect x="14" y="6" width="2" height="2"/>
+              <rect x="6" y="9" width="1" height="4"/>
+              <rect x="17" y="9" width="1" height="4"/>
+            </g>
+
+            <!-- Eyebrows -->
+            <g fill="var(--hair-dark)">
+              <rect x="8" y="10" width="3" height="1"/>
+              <rect x="13" y="10" width="3" height="1"/>
+            </g>
+
+            <!-- Eyes (Blinking Animation) -->
+            <g class="p-eye-open" fill="var(--grey)">
+              <rect x="9" y="11" width="2" height="2"/>
+              <rect x="14" y="11" width="2" height="2"/>
+              <!-- Eye shine -->
+              <rect x="9" y="11" width="1" height="1" fill="var(--white)"/>
+              <rect x="14" y="11" width="1" height="1" fill="var(--white)"/>
+            </g>
+
+            <g class="p-eye-closed" fill="var(--grey)">
+              <rect x="9" y="12" width="2" height="1"/>
+              <rect x="14" y="12" width="2" height="1"/>
+            </g>
+
+            <!-- Cheeks (Blush) -->
+            <rect x="7" y="13" width="2" height="1" fill="var(--pink)" opacity="0.6"/>
+            <rect x="15" y="13" width="2" height="1" fill="var(--pink)" opacity="0.6"/>
+
+            <!-- Lips -->
+            <rect x="11" y="15" width="2" height="1" fill="var(--pink)"/>
+
+          </g>
+        </svg>
+        <div class="plvl">LVL 99 DESIGNER</div>
+      </div>
+    </div>
+
+    <!-- Nameplate -->
+    <div class="title-block">
+      <div class="name">Karen Babaoğlu</div>
+      <div class="class-line">Class: <b>Graphic Designer</b></div>
+    </div>
+
+    <!-- RPG Stats -->
+    <div class="stats">
+      <div class="stat-row">
+        <div class="stat-label"><span>Creativity (HP)</span><span>100%</span></div>
+        <div class="bar hp"><i></i></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-label"><span>Pixel Magic (MP)</span><span>92%</span></div>
+        <div class="bar mp"><i></i></div>
+      </div>
+      <div class="flavor">
+        <span class="tag">✦</span> Crafting pixel-perfect visual experiences & brand identities.
+      </div>
+    </div>
+
+    <!-- Contact Menu -->
+    <div class="menu">
+      <div class="row">
+        <span class="arrow">▶</span>
+        <span class="k">Email</span>
+        <a href="mailto:babaoglukaren@gmail.com">babaoglukaren@gmail.com</a>
+      </div>
+      <div class="row">
+        <span class="arrow">▶</span>
+        <span class="k">Portfolio</span>
+        <a href="https://example.com" target="_blank" rel="noopener">portfolio-link-buraya.com</a>
+      </div>
+      <div class="row">
+        <span class="arrow">▶</span>
+        <span class="k">Telefon</span>
+        <a href="tel:+905000000000">+90 5XX XXX XX XX</a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      Let's Create Something Magical <span class="blink">★</span>
+    </div>
+
+  </div>
+
+</body>
+</html>

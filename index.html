@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SpellCast TR — Kelime Oyunu</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>SpellCast TR</h1>
+    <div class="sub">Türkçe sözlük destekli kelime oyunu — New Game modu</div>
+  </header>
+
+  <main>
+    <section class="left">
+      <div id="board" class="board" aria-label="Oyun Tahtası"></div>
+      <div class="selection">
+        <div>
+          <strong>Seçim:</strong>
+          <span id="currentWord">—</span>
+        </div>
+        <div class="selection-actions">
+          <button id="btnUndo" class="ghost">Geri Al</button>
+          <button id="btnClear" class="ghost">Temizle</button>
+          <button id="btnConfirm" class="primary">Onayla</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="right">
+      <div class="panel">
+        <h2>Oyun</h2>
+        <div class="row">
+          <button id="btnNew" class="primary">Yeni Oyun</button>
+          <label class="switch">
+            <input type="checkbox" id="chkTimer">
+            <span class="slider"></span>
+          </label>
+          <label for="chkTimer" class="switch-label">30 sn Zamanlayıcı</label>
+          <div id="timer" class="timer hidden">30</div>
+        </div>
+        <div class="row stats">
+          <div><strong>Tur:</strong> <span id="round">1</span>/5</div>
+          <div><strong>Skor:</strong> <span id="score">0</span></div>
+          <div><strong>Uzun Kelime Bonus:</strong> 6+ harf = +10</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Gems & Yetenekler</h2>
+        <div class="row">
+          <div class="gems" title="Maks 10">💎 <span id="gems">3</span></div>
+          <button id="btnShuffle" class="ability" data-cost="1" title="1💎">Karıştır (1💎)</button>
+          <button id="btnSwap" class="ability" data-cost="3" title="3💎">Harf Değiştir (3💎)</button>
+          <button id="btnNudge" class="ability" data-cost="3" title="3💎">Yer Değiştir (3💎)</button>
+          <button id="btnHint" class="ability" data-cost="4" title="4💎">İpucu (4💎)</button>
+        </div>
+        <div class="help">
+          <details>
+            <summary>Yetenek Açıklamaları</summary>
+            <ul>
+              <li><strong>Karıştır:</strong> Tahtadaki harfleri rastgele karıştırır (bonuslar kalır).</li>
+              <li><strong>Harf Değiştir:</strong> Seçtiğin bir hücreyi istediğin harfle değiştir.</li>
+              <li><strong>Yer Değiştir:</strong> Seçtiğin hücredeki harfi oklarla komşu (1 adım) bir yöne taşır.</li>
+              <li><strong>İpucu:</strong> Tahtada geçerli bir kelime bulup önerir.</li>
+            </ul>
+          </details>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Sözlük</h2>
+        <div class="row">
+          <input type="file" id="dictFile" accept=".txt" />
+          <button id="btnLoadDict">Sözlük Yükle</button>
+        </div>
+        <div class="help small">
+          Büyük bir Türkçe sözlük (.txt, her satırda 1 kelime) dosyası yükleyebilirsin. Varsayılan mini sözlük yüklüdür.
+        </div>
+        <div class="row small">
+          <label><input type="checkbox" id="chkLenient"> Serbest Mod (sözlük kısıtı yok)</label>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Geçmiş</h2>
+        <ul id="history" class="history"></ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>
+      <strong>Puanlama:</strong> A,E,İ,I,O,Ö,Ü=1 | N,R,S,Ş,T=2 | D,G,Ğ,L=3 | B,H,P,M,U,Y=4 | C,Ç,F,V=5 | K=6 | J=7 | Q,W,X=8 (Z=8)
+    </div>
+  </footer>
+
+  <dialog id="promptDialog">
+    <form method="dialog">
+      <h3 id="promptTitle">Harf Değiştir</h3>
+      <div class="field">
+        <label for="promptInput">Yeni harf (Türkçe karakter olabilir):</label>
+        <input id="promptInput" maxlength="1" />
+      </div>
+      <menu>
+        <button value="cancel">İptal</button>
+        <button id="promptOk" value="ok" class="primary">Tamam</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>

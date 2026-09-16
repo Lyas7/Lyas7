@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Silly String - LYAS &lt;3 KAREN</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { overflow: hidden; height: 100%; cursor: none; user-select: none; background: #f4f1ec; }
+    canvas { display: block; }
+
+    #reset {
+      position: absolute; top: 18px; left: 18px;
+      background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.06);
+      color: rgba(0,0,0,0.32); font: 400 11px 'DM Mono', monospace;
+      padding: 5px 14px; border-radius: 6px;
+      cursor: pointer; transition: all .2s; letter-spacing: 0.02em;
+    }
+    #reset:hover { background: rgba(0,0,0,0.08); color: rgba(0,0,0,0.5); }
+
+    #link {
+      position: absolute; bottom: 12px; right: 16px;
+      color: rgba(0,0,0,0.12); font: 400 9px 'DM Mono', monospace;
+      text-decoration: none; transition: color .2s; letter-spacing: 0.03em;
+    }
+    #link:hover { color: rgba(0,0,0,0.3); }
+
+    #panel {
+      position: absolute; top: 14px; right: 14px;
+      width: 200px;
+    }
+
+    #toggle {
+      width: 100%; padding: 8px 14px;
+      background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.06);
+      color: rgba(0,0,0,0.4); font: 500 11px 'DM Mono', monospace;
+      border-radius: 8px; cursor: pointer;
+      transition: all .2s; text-align: left; letter-spacing: 0.03em;
+    }
+    #toggle:hover { background: rgba(0,0,0,0.08); color: rgba(0,0,0,0.55); }
+    #toggle.active { border-radius: 8px 8px 0 0; border-bottom-color: transparent; }
+
+    #controls {
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(0,0,0,0.06); border-top: none;
+      border-radius: 0 0 8px 8px;
+      max-height: 0; overflow: hidden; opacity: 0;
+      transition: max-height .3s ease, opacity .25s ease, padding .3s ease;
+      padding: 0 16px;
+    }
+    #controls.open { max-height: 320px; opacity: 1; padding: 14px 16px 18px; }
+
+    #controls label {
+      display: flex; flex-direction: column; gap: 5px;
+      margin-bottom: 14px;
+    }
+    #controls label:last-child { margin-bottom: 0; }
+
+    #controls span {
+      font: 400 10px 'DM Mono', monospace;
+      color: rgba(0,0,0,0.35); letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    #controls input[type="range"] {
+      -webkit-appearance: none; appearance: none;
+      width: 100%; height: 4px;
+      background: rgba(0,0,0,0.07); border-radius: 2px;
+      outline: none; cursor: pointer;
+    }
+    #controls input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: #fff; border: 1.5px solid rgba(0,0,0,0.18);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      transition: border-color .15s, box-shadow .15s;
+    }
+    #controls input[type="range"]::-webkit-slider-thumb:hover {
+      border-color: rgba(0,0,0,0.3);
+      box-shadow: 0 1px 6px rgba(0,0,0,0.15);
+    }
+    #controls input[type="range"]::-moz-range-thumb {
+      width: 14px; height: 14px; border-radius: 50%;
+      background: #fff; border: 1.5px solid rgba(0,0,0,0.18);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+    #controls input[type="range"]::-moz-range-track {
+      height: 4px; background: rgba(0,0,0,0.07); border-radius: 2px; border: none;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="c"></canvas>
+<button id="reset">Reset</button>
+
+<div id="panel">
+  <button id="toggle">Experiment ↕</button>
+  <div id="controls">
+    <label><span>Pressure</span><input type="range" id="r-pressure" min="0" max="100" value="50"></label>
+    <label><span>Gravity</span><input type="range" id="r-gravity" min="-100" max="100" value="30"></label>
+    <label><span>Curliness</span><input type="range" id="r-curl" min="0" max="100" value="50"></label>
+    <label><span>Thickness</span><input type="range" id="r-thick" min="0" max="100" value="40"></label>
+    <label><span>Chaos</span><input type="range" id="r-chaos" min="0" max="100" value="25"></label>
+  </div>
+</div>
+
+<a id="link" href="https://calculatequick.com" target="_blank">calculatequick.com</a>
+
+<script>
+const C = document.getElementById('c'), X = C.getContext('2d');
+let W, H;
+
+document.getElementById('toggle').addEventListener('click', function() {
+  this.classList.toggle('active');
+  document.getElementById('controls').classList.toggle('open');
+});
+document.getElementById('reset').addEventListener('click', () => { strands = []; cur = null; });
+
+let logoCanvas = document.createElement('canvas');
+let collData, ready = false;
+
+function drawSteveHead(ctx, x, y, size) {
+  ctx.save();
+  ctx.translate(x, y);
+
+  const w = size;
+  const h = size * 0.88;
+  const halfW = w / 2;
+  const halfH = h / 2;
+
+  // Steve Body / Shirt (Cyan/Turquoise)
+  ctx.fillStyle = '#00a8c6';
+  ctx.strokeStyle = '#000';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(-halfW * 1.35, halfH + 28);
+  ctx.lineTo(-halfW * 0.8, halfH);
+  ctx.lineTo(halfW * 0.8, halfH);
+  ctx.lineTo(halfW * 1.35, halfH + 28);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  // Dirt block slot icon on the left
+  ctx.save();
+  ctx.translate(-halfW * 1.25, halfH - 2);
+  ctx.fillStyle = '#795548';
+  ctx.strokeStyle = '#000';
+  ctx.lineWidth = 2;
+  ctx.fillRect(-12, -12, 24, 24);
+  ctx.strokeRect(-12, -12, 24, 24);
+  // Grass top on dirt block
+  ctx.fillStyle = '#4caf50';
+  ctx.fillRect(-12, -12, 24, 7);
+  ctx.strokeRect(-12, -12, 24, 7);
+  ctx.restore();
+
+  // 3D Cube Head - Top Hair Face
+  ctx.fillStyle = '#3e2723';
+  ctx.beginPath();
+  ctx.moveTo(-halfW, -halfH);
+  ctx.lineTo(-halfW * 0.5, -halfH - 18);
+  ctx.lineTo(halfW * 0.65, -halfH - 18);
+  ctx.lineTo(halfW, -halfH);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  // 3D Cube Head - Right Side Shadow Face
+  ctx.fillStyle = '#d7ccc8';
+  ctx.beginPath();
+  ctx.moveTo(halfW, -halfH);
+  ctx.lineTo(halfW * 0.65, -halfH - 18);
+  ctx.lineTo(halfW * 0.65, halfH - 18);
+  ctx.lineTo(halfW, halfH);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+
+  // Main Front Face
+  ctx.fillStyle = '#f5d0a9';
+  ctx.beginPath();
+  ctx.rect(-halfW, -halfH, w, h);
+  ctx.fill();
+  ctx.stroke();
+
+  // Hair Fringe on Front Face
+  ctx.fillStyle = '#3e2723';
+  ctx.beginPath();
+  ctx.rect(-halfW, -halfH, w, h * 0.22);
+  ctx.fill();
+
+  // Eyes (Almond shape eyes)
+  ctx.fillStyle = '#3e2723';
+  ctx.beginPath();
+  ctx.ellipse(-halfW * 0.38, -halfH * 0.08, 7, 4.5, 0, 0, Math.PI * 2);
+  ctx.ellipse(halfW * 0.38, -halfH * 0.08, 7, 4.5, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Pupil highlights
+  ctx.fillStyle = '#111';
+  ctx.beginPath();
+  ctx.arc(-halfW * 0.38, -halfH * 0.08, 2.5, 0, Math.PI * 2);
+  ctx.arc(halfW * 0.38, -halfH * 0.08, 2.5, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Thin Mustache
+  ctx.strokeStyle = '#3e2723';
+  ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  ctx.moveTo(-halfW * 0.32, halfH * 0.22);
+  ctx.quadraticCurveTo(0, halfH * 0.16, halfW * 0.32, halfH * 0.22);
+  ctx.stroke();
+
+  // Smirk / Smile
+  ctx.strokeStyle = '#000';
+  ctx.lineWidth = 2.8;
+  ctx.beginPath();
+  ctx.moveTo(-halfW * 0.45, halfH * 0.32);
+  ctx.quadraticCurveTo(0, halfH * 0.62, halfW * 0.45, halfH * 0.32);
+  ctx.stroke();
+
+  ctx.restore();
+}
+
+async function buildLogo() {
+  logoCanvas.width = W;
+  logoCanvas.height = H;
+  const lctx = logoCanvas.getContext('2d');
+  lctx.clearRect(0, 0, W, H);
+
+  const headSize = Math.min(W * 0.14, 85);
+  const fontSize = Math.min(W * 0.05, 32);
+  const cx = W / 2;
+  const cy = H / 2;
+  const spacing = headSize * 1.35;
+
+  // Draw Steve Head in Center
+  drawSteveHead(lctx, cx, cy, headSize);
+
+  // Draw Text "KAYISI" & "MAMİ"
+  lctx.font = `700 ${fontSize}px 'DM Mono', monospace, sans-serif`;
+  lctx.lineJoin = 'round';
+
+  // "KAYISI" (Left)
+  lctx.textAlign = 'right';
+  lctx.strokeStyle = '#000';
+  lctx.lineWidth = 4;
+  lctx.strokeText('KAYISI', cx - spacing, cy + fontSize * 0.32);
+  lctx.fillStyle = '#111';
+  lctx.fillText('KAYISI', cx - spacing, cy + fontSize * 0.32);
+
+  // "MAMİ" (Right)
+  lctx.textAlign = 'left';
+  lctx.strokeStyle = '#000';
+  lctx.lineWidth = 4;
+  lctx.strokeText('MAMİ', cx + spacing, cy + fontSize * 0.32);
+  lctx.fillStyle = '#111';
+  lctx.fillText('MAMİ', cx + spacing, cy + fontSize * 0.32);
+
+  collData = lctx.getImageData(0, 0, W, H).data;
+  ready = true;
+}
+
+function hit(x, y) {
+  if (!ready) return false;
+  const ix = Math.round(x), iy = Math.round(y);
+  if (ix < 0 || iy < 0 || ix >= W || iy >= H) return false;
+  return collData[(iy * W + ix) * 4 + 3] > 30;
+}
+
+const resize = () => { W = C.width = innerWidth; H = C.height = innerHeight; buildLogo(); };
+resize(); addEventListener('resize', resize);
+
+function rv(id) { return +document.getElementById(id).value; }
+
+class Pt {
+  constructor(x, y) { this.x = x; this.y = y; this.ox = x; this.oy = y; this.done = false; this.st = 0; }
+  update() {
+    if (this.done) return;
+    const g = rv('r-gravity') / 100 * 0.4;
+    let vx = (this.x - this.ox) * 0.97, vy = (this.y - this.oy) * 0.97;
+    this.ox = this.x; this.oy = this.y;
+    this.x += vx; this.y += vy + g;
+    if (hit(this.x, this.y)) {
+      if (!hit(this.x, this.oy)) { this.y = this.oy; this.oy = this.y; }
+      else if (!hit(this.ox, this.y)) { this.x = this.ox; this.ox = this.x; }
+      else { this.x = this.ox; this.y = this.oy; }
+      this.ox = this.x; this.oy = this.y; this.st += 4;
+    }
+    if (this.y > H - 1) { this.y = H - 1; this.oy = this.y; this.st += 4; }
+    if (this.y < 0) { this.y = 0; this.oy = 0; this.st += 4; }
+    if (this.x < 0) this.x = 0; if (this.x > W) this.x = W;
+    if (this.st > 14) this.done = true;
+  }
+}
+
+class Lk {
+  constructor(a, b) { this.a = a; this.b = b; this.l = 2.5; this.broken = false; }
+  solve() {
+    if (this.broken) return;
+    const dx = this.b.x - this.a.x, dy = this.b.y - this.a.y;
+    const d = Math.sqrt(dx * dx + dy * dy) || .001;
+    if (d > 25) { this.broken = true; return; }
+    const f = (this.l - d) / d * 0.25;
+    if (!this.a.done) { this.a.x -= dx * f; this.a.y -= dy * f; }
+    if (!this.b.done) { this.b.x += dx * f; this.b.y += dy * f; }
+  }
+}
+
+let strands = [];
+const COLS = ['#ff1493', '#00d9a0', '#ffc400', '#00b8ff', '#ff5533', '#b84dff'];
+const COLS_L = ['#ff6ec7', '#66ffc8', '#ffe066', '#66d9ff', '#ff9a75', '#d4a0ff'];
+let ci = 0;
+
+class Strand {
+  constructor(i) { this.pts = []; this.lks = []; this.ci = i; }
+  add(x, y, vx, vy) {
+    const p = new Pt(x, y); p.ox = x - vx; p.oy = y - vy;
+    if (this.pts.length) this.lks.push(new Lk(this.pts[this.pts.length - 1], p));
+    this.pts.push(p);
+  }
+}
+
+let mx = W / 2, my = H * 0.2, spraying = false, cur = null, spT = 0;
+let demo = true, demoT = 0;
+
+addEventListener('mousedown', e => {
+  if (e.target.closest('#panel,#reset')) return;
+  demo = false; spraying = true; spT = 0;
+  cur = new Strand(ci++ % COLS.length); strands.push(cur);
+});
+addEventListener('mouseup', () => { spraying = false; cur = null; });
+addEventListener('mousemove', e => {
+  if (demo && !e.target.closest('#panel,#reset')) { demo = false; spraying = false; cur = null; }
+  mx = e.clientX; my = e.clientY;
+});
+addEventListener('touchstart', e => {
+  if (e.target.closest('#panel,#reset')) return;
+  e.preventDefault(); demo = false;
+  mx = e.touches[0].clientX; my = e.touches[0].clientY;
+  spraying = true; spT = 0;
+  cur = new Strand(ci++ % COLS.length); strands.push(cur);
+}, { passive: false });
+addEventListener('touchmove', e => {
+  if (e.target.closest('#panel')) return;
+  e.preventDefault(); mx = e.touches[0].clientX; my = e.touches[0].clientY;
+}, { passive: false });
+addEventListener('touchend', () => { spraying = false; cur = null; });
+
+const NX = 0, NY = -32;
+
+function aimAngle(cx, cy) {
+  const targetX = W / 2;
+  const targetY = H / 2;
+  const rawA = Math.atan2(targetY - cy, targetX - cx);
+  const dampedA = Math.atan2(Math.sin(rawA) * 0.2, Math.cos(rawA));
+  return dampedA + Math.PI / 2;
+}
+
+function tipWorld(cx, cy, rot) {
+  return {
+    x: cx + NX * Math.cos(rot) - NY * Math.sin(rot),
+    y: cy + NX * Math.sin(rot) + NY * Math.cos(rot)
+  };
+}
+
+function drawDispenser(ctx, cx, cy) {
+  const a = aimAngle(cx, cy);
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(a);
+
+  // Soft shadow
+  ctx.save();
+  ctx.shadowColor = 'rgba(0,0,0,0.1)';
+  ctx.shadowBlur = 8;
+  ctx.shadowOffsetY = 4;
+
+  ctx.fillStyle = '#fcfbfa';
+  ctx.strokeStyle = '#111111';
+  ctx.lineWidth = 2.5;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  // Main body outline
+  ctx.beginPath();
+  ctx.moveTo(-3, 26);
+  ctx.bezierCurveTo(-10, 28, -24, 25, -22, 14);
+  ctx.bezierCurveTo(-20, 4, -8, 5, -7, 10);
+  ctx.lineTo(-9, -14);
+  ctx.bezierCurveTo(-9, -24, -6, -32, 0, -32);
+  ctx.bezierCurveTo(6, -32, 9, -24, 9, -14);
+  ctx.lineTo(7, 10);
+  ctx.bezierCurveTo(8, 5, 20, 4, 22, 14);
+  ctx.bezierCurveTo(24, 25, 10, 28, 3, 26);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.restore();
+
+  // Glans arch line
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = '#111111';
+  ctx.beginPath();
+  ctx.moveTo(-9, -14);
+  ctx.quadraticCurveTo(0, -10, 9, -14);
+  ctx.stroke();
+
+  // Slit at nozzle tip
+  ctx.beginPath();
+  ctx.moveTo(0, -30);
+  ctx.lineTo(0, -24);
+  ctx.stroke();
+
+  // Hatching lines on base lobes (matching reference drawing)
+  const ticks = [
+    {x1: -21, y1: 18, x2: -25, y2: 20},
+    {x1: -18, y1: 23, x2: -21, y2: 27},
+    {x1: -12, y1: 26, x2: -13, y2: 31},
+    {x1: -5, y1: 27, x2: -5, y2: 32},
+    {x1: 21, y1: 18, x2: 25, y2: 20},
+    {x1: 18, y1: 23, x2: 21, y2: 27},
+    {x1: 12, y1: 26, x2: 13, y2: 31},
+    {x1: 5, y1: 27, x2: 5, y2: 32}
+  ];
+
+  ticks.forEach(t => {
+    ctx.beginPath();
+    ctx.moveTo(t.x1, t.y1);
+    ctx.lineTo(t.x2, t.y2);
+    ctx.stroke();
+  });
+
+  // Spray particles emerging from the tip slit when active
+  if (spraying && cur) {
+    for (let i = 0; i < 4; i++) {
+      const d = 2 + Math.random() * 6;
+      ctx.fillStyle = COLS[cur.ci];
+      ctx.globalAlpha = 0.2 + Math.random() * 0.3;
+      ctx.beginPath();
+      ctx.arc((Math.random() - 0.5) * 4, -32 - d, 0.8 + Math.random() * 1.2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  ctx.restore();
+}
+
+function emitFrom(cx, cy) {
+  if (!cur) return; spT++;
+  const a = aimAngle(cx, cy);
+  const tip = tipWorld(cx, cy, a);
+  const pressure = 3 + rv('r-pressure') / 100 * 11;
+  const curlAmt = rv('r-curl') / 100 * 4;
+  const chaos = rv('r-chaos') / 100 * 1.2;
+  
+  const sprayAngle = a - Math.PI / 2;
+
+  for (let j = 0; j < 3; j++) {
+    const speed = pressure + Math.random() * 2;
+    const curl = Math.sin(spT * 0.35 + j * 1.7) * curlAmt;
+    const wobble = (Math.random() - 0.5) * (0.15 + chaos);
+    const pa = sprayAngle + Math.PI / 2;
+    cur.add(
+      tip.x, 
+      tip.y, 
+      Math.cos(sprayAngle + wobble) * speed + Math.cos(pa) * curl, 
+      Math.sin(sprayAngle + wobble) * speed + Math.sin(pa) * curl
+    );
+  }
+  let tot = 0; for (const s of strands) tot += s.pts.length;
+  while (tot > 8000 && strands.length > 1) {
+    const o = strands[0]; if (o === cur) break;
+    if (o.pts.length) { o.pts.shift(); o.lks.shift(); tot--; } else strands.shift();
+  }
+}
+
+function drawStrands(ctx) {
+  const thick = 0.5 + rv('r-thick') / 100 * 3.5;
+  for (const s of strands) {
+    if (s.pts.length < 2) continue;
+    const pts = s.pts, lks = s.lks, col = COLS[s.ci], colL = COLS_L[s.ci];
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
+    for (let i = 1; i < pts.length; i++) {
+      if (i - 1 < lks.length && lks[i - 1].broken) { ctx.moveTo(pts[i].x, pts[i].y); continue; }
+      const dx = pts[i].x - pts[i - 1].x, dy = pts[i].y - pts[i - 1].y;
+      if (dx * dx + dy * dy > 600) { ctx.moveTo(pts[i].x, pts[i].y); continue; }
+      ctx.quadraticCurveTo(pts[i - 1].x, pts[i - 1].y, (pts[i - 1].x + pts[i].x) / 2, (pts[i - 1].y + pts[i].y) / 2);
+    }
+    ctx.save(); ctx.shadowColor = col; ctx.shadowBlur = 2;
+    ctx.strokeStyle = col; ctx.globalAlpha = 0.12; ctx.lineWidth = thick + 2; ctx.stroke(); ctx.restore();
+    ctx.strokeStyle = col; ctx.globalAlpha = 0.9; ctx.lineWidth = thick; ctx.stroke();
+    ctx.strokeStyle = colL; ctx.globalAlpha = 0.2; ctx.lineWidth = thick * 0.3; ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+}
+
+function tick() {
+  demoT++;
+  let canX = mx, canY = my;
+  if (demo) {
+    canX = W * 0.1 + ((Math.sin(demoT * 0.008) + 1) / 2) * W * 0.8;
+    canY = H * 0.12 + Math.sin(demoT * 0.03) * 10;
+    if (demoT % 2 === 0) {
+      if (!cur || cur.pts.length > 150) { cur = new Strand(ci++ % COLS.length); strands.push(cur); }
+      spraying = true;
+    }
+  }
+  X.clearRect(0, 0, W, H);
+  X.fillStyle = '#f4f1ec'; X.fillRect(0, 0, W, H);
+  if (spraying) emitFrom(canX, canY);
+  for (const s of strands) {
+    for (const p of s.pts) p.update();
+    for (let i = 0; i < 2; i++) for (const k of s.lks) k.solve();
+  }
+  drawStrands(X);
+  if (ready) X.drawImage(logoCanvas, 0, 0);
+  drawDispenser(X, canX, canY);
+  requestAnimationFrame(tick);
+}
+tick();
+</script>
+
+</body>
+</html>
