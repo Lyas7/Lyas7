@@ -76,4 +76,14 @@
   <img src="https://img.shields.io/badge/Telefon-5352777057-25D366?style=for-the-badge&logo=whatsapp&logoColor=white">
 </p>
 
-<p align="center"><i>Profilime uğradığın için teşekkürler! ⭐</i></p>
+<p align="center"><i>Profilime uğradığın için teşekkürler! ⭐</i></p>   
+
+
+
+
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Lyas7/Lyas7/output/github-contribution-grid-snake-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Lyas7/Lyas7/output/github-contribution-grid-snake.svg">
+  <img alt="github contribution grid snake animation" src="https://raw.githubusercontent.com/Lyas7/Lyas7/output/github-contribution-grid-snake.svg">
+</picture>
