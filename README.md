@@ -78,9 +78,3 @@
 
 <p align="center"><i>Profilime uğradığın için teşekkürler! ⭐</i></p>   
 
-
-
-
-
-
-![snake gif](https://github.com/Lyas7/Lyas7/blob/output/github-contribution-grid-snake.gif)
